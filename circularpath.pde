@@ -30,19 +30,19 @@ void draw() {
   background(128,0,0);
   float frameCycle = radians(frameCount%360);
   float frameSine=sin(frameCycle);
-  float scalingFactorX = map(frameSine, -1, 1, 0.0, 1.0);
-  //float scalingFactorX = map(mouseX, 0, width, 0.0, 1.0);
+  float epochsProgress = map(frameSine, -1, 1, 0.0, 1.0);
+  //float epochsProgress = map(mouseX, 0, width, 0.0, 1.0);
   //float scalingFactorY = map(mouseY, 0, width, 0.0, 1.0);
   //columnWidth = width * map(mouseY, 0, height, 0.1, 0.4);
   position = new PVector(center.x-columnWidth, center.y); //Starting position is a point at 9'o'clock on the circular path
   stroke(255);
   line(position.x, position.y, position.x+columnWidth*2, position.y);
   //generations = int(map(mouseX, 0, width, 2, 360));
-  segmentAngle = TWO_PI*scalingFactorX*completeness/generations;
+  segmentAngle = TWO_PI*epochsProgress*completeness/generations;
   //size = map(mouseX, 0, width, 0, columnWidth*2);
   //sideLength = size*2;
-  sideLength = 2 * columnWidth * sin(PI/generations) * scalingFactorX * completeness;
-  size = sideLength * 0.5;
+  sideLength = 2 * columnWidth * sin(PI/generations) * epochsProgress * completeness;
+  //size = sideLength * 0.5;
   //ellipse(center.x, center.y, columnWidth, columnWidth);
   //ellipse(center.x, center.y, size, size);
   //fill(0);
@@ -58,6 +58,6 @@ void draw() {
     //noFill();
     ellipse(position.x, position.y, size, size);
     position.add(velocity);
-    angle -= segmentAngle;
+    angle -= segmentAngle; // Need to figure out how this angle changes through the generations. The 'generations+1' could be a bit tricky!
   }
 }
