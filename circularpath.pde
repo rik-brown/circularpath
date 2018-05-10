@@ -35,11 +35,13 @@ void draw() {
   //float scalingFactorY = map(mouseY, 0, width, 0.0, 1.0);
   //columnWidth = width * map(mouseY, 0, height, 0.1, 0.4);
   position = new PVector(center.x-columnWidth, center.y); //Starting position is a point at 9'o'clock on the circular path
+  stroke(255);
+  line(position.x, position.y, position.x+columnWidth*2, position.y);
   //generations = int(map(mouseX, 0, width, 2, 360));
-  segmentAngle = TWO_PI*scalingFactorX/generations;
+  segmentAngle = TWO_PI*scalingFactorX*completeness/generations;
   //size = map(mouseX, 0, width, 0, columnWidth*2);
   //sideLength = size*2;
-  sideLength = 2 * columnWidth * sin(PI/generations) * scalingFactorX;
+  sideLength = 2 * columnWidth * sin(PI/generations) * scalingFactorX * completeness;
   size = sideLength * 0.5;
   //ellipse(center.x, center.y, columnWidth, columnWidth);
   //ellipse(center.x, center.y, size, size);
