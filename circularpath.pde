@@ -12,7 +12,6 @@ float size;
 float columnWidth;                       // columnWidth  = R (radius of the circle around which the cells are travelling)
 float segmentAngle = TWO_PI/generations; // segmentAngle = angle between two 'spokes' pointing to adjacent vertexes (when the complete polygon is drawn)
 float angle;                             // angle        = angle 
-float sideLength;
 float completeness;
 float epochsProgress = 1;
 float offsetAngle = radians(60);
@@ -49,7 +48,8 @@ void draw() {
   //float epochsProgress = 1;
   float epochsProgress = map(frameSine, -1, 1, 0.0, 1.0);
   //float epochsProgress = map(mouseY, 0, width, 0.0, 1.0);
-  columnWidth = width * map(mouseY, 0, height, 0.1, 0.4);
+  //columnWidth = width * map(mouseY, 0, height, 0.1, 0.4);
+  offsetAngle = radians(map(mouseY, 0, height, 0, 180));
   
   //line(position.x, position.y, position.x+columnWidth*2, position.y);
   segmentAngle = TWO_PI/generations * epochsProgress;
@@ -72,12 +72,14 @@ void draw() {
     PVector velocity = PVector.sub(NewPos, position).mult(magScale);
     //line(position.x, position.y, position.x+velocity.x, position.y+velocity.y);
     //size = velocity.mag()*0.5;
+    float dist2Center = dist(position.x, position.y, center.x, center.y);
+    float distScale = map(dist2Center, 0, columnWidth, 0, 1);
     pushMatrix();
     translate(position.x, position.y);
     rotate(Center2Pos.heading());
     fill(fillCol);
     noStroke();
-    ellipse(0, 0, size, size);
+    ellipse(0, 0, size*distScale, size*distScale);
     popMatrix();
     poly.vertex(position.x, position.y);
     position.add(velocity);  
