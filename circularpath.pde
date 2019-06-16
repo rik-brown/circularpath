@@ -26,7 +26,7 @@ void setup() {
   columnWidth = width * 0.25;
   textSize(20);
   size = 40;
-  completeness = 1.0;
+  completeness = 0.5;
   
   center = new PVector(width*0.5, height*0.5); //Starting position is a point at 9'o'clock on the circular path 
   position = new PVector(center.x-columnWidth, center.y); //Starting position is a point at 9'o'clock on the circular path
@@ -44,15 +44,17 @@ void draw() {
   generations = int(map(mouseX,0,width,1,360));
   float frameCycle = radians(frameCount%360);
   float frameSine=sin(frameCycle);
-  float magScale = map(frameSine, -1, 1, 0, 1.0);
+  //float magScale = map(frameSine, -1, 1, 0, 1.0);
+  float magScale = 1.0;
   //float epochsProgress = 1;
   float epochsProgress = map(frameSine, -1, 1, 0.0, 1.0);
   //float epochsProgress = map(mouseY, 0, width, 0.0, 1.0);
   //columnWidth = width * map(mouseY, 0, height, 0.1, 0.4);
   offsetAngle = radians(map(mouseY, 0, height, 0, 180));
+  offsetAngle = 0;
   
   //line(position.x, position.y, position.x+columnWidth*2, position.y);
-  segmentAngle = TWO_PI/generations * epochsProgress;
+  segmentAngle = TWO_PI/generations * epochsProgress * completeness;
   angle = segmentAngle + offsetAngle;
   noFill();
   ellipse(center.x, center.y, columnWidth, columnWidth);
@@ -73,7 +75,8 @@ void draw() {
     //line(position.x, position.y, position.x+velocity.x, position.y+velocity.y);
     //size = velocity.mag()*0.5;
     float dist2Center = dist(position.x, position.y, center.x, center.y);
-    float distScale = map(dist2Center, 0, columnWidth, 0, 1);
+    //float distScale = map(dist2Center, 0, columnWidth, 0, 1);
+    float distScale = 1;
     pushMatrix();
     translate(position.x, position.y);
     rotate(Center2Pos.heading());
